@@ -35,27 +35,11 @@ class Helper
     return default_photo(profile, size, {}, link) unless profile.has_valid_photo?
 
 
-    if link
-      return "this link"
-    else
-      return "just image"
-    end
+    link ? "this link" : "just image"
   end
 
   def default_photo(profile, size, html={}, link = true)
-    return "default #{size}" unless profile.user
-    if link
-      if profile.user.rep?
-        "default link 190x119"
-      else
-        "default link #{size}"
-      end
-    else
-      if profile.user.rep?
-        "default 190x119"
-      else
-        "default #{size}"
-      end
-    end
+    default_size = profile.user && profile.user.rep? ? "190x119" : size
+    link ? "default link #{default_size}" : "default #{default_size}"
   end
 end
