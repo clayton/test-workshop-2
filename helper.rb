@@ -1,4 +1,5 @@
 class Helper
+
   def self.foo
     "foo"
   end
@@ -28,39 +29,32 @@ class Helper
   end
 
   def display_photo(profile, size, html = {}, options = {}, link = true)
-    return image_tag("wrench.png") unless profile  # this should not happen
+    return "wrench.png" unless profile  # this should not happen
 
-    show_default_image = !(options[:show_default] == false)
-    html.reverse_merge!(:class => 'thumbnail', :size => size, :title => "Link to #{profile.name}")
+    return "NO DEFAULT" if options[:show_default] == false && !profile.has_valid_photo?
+    return default_photo(profile, size, {}, link) unless profile.has_valid_photo?
 
-    if profile && profile.user
-      if profile.user && profile.user.photo && File.exists?(profile.user.photo)
-        @user = profile.user
-        if link
-          return link_to(image_tag(url_for_file_column("user", "photo", size), html), profile_path(profile) )
-        else
-          return image_tag(url_for_file_column("user", "photo", size), html)
-        end
-      else
-        show_default_image ? default_photo(profile, size, {}, link) : ''
-      end
+
+    if link
+      return "this link"
+    else
+      return "just image"
     end
-
-    show_default_image ? default_photo(profile, size, {}, link) : ''
   end
 
   def default_photo(profile, size, html={}, link = true)
+    return "default #{size}" unless profile.user
     if link
       if profile.user.rep?
-        link_to(image_tag("user190x119.jpg", html), profile_path(profile) )
+        "default link 190x119"
       else
-        link_to(image_tag("user#{size}.jpg", html), profile_path(profile) )
+        "default link #{size}"
       end
     else
       if profile.user.rep?
-        image_tag("user190x119.jpg", html)
+        "default 190x119"
       else
-        image_tag("user#{size}.jpg", html)
+        "default #{size}"
       end
     end
   end
