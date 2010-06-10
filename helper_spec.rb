@@ -54,7 +54,7 @@ describe "Helper" do
         @profile.name = "Clayton"
       end
       it "return a default" do
-        @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default 100x100"
+        @helper.display_photo(@profile, "100x100", {}, {}, true).should == "default link 100x100"
       end
     end
     
